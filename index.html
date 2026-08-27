@@ -4661,10 +4661,12 @@ body.light-mode .portfolio-table-actions .mini-select { background-image:url("da
 
 
     function getTileLayer() {
+      // CARTO raster basemaps require an API key as of Aug 2026.
+      const CARTO_KEY = 'cb1_2dkh_1_511eb3b32df0d653d22914f7';
       const light = body.classList.contains('light-mode');
       const url = light
-        ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
-        : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+        ? `https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=${CARTO_KEY}`
+        : `https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=${CARTO_KEY}`;
       return L.tileLayer(url, { subdomains: 'abcd', maxZoom: 19 });
     }
 
@@ -12094,11 +12096,11 @@ body[data-kiosk="1"] .kiosk-screen [draggable] { cursor: default; }
     }).setView([15, 20], 2);  /* center between Americas and Asia-Pacific */
     window._kioskMapInstance = m;
 
-    /* Dark base — no labels */
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png',
+    /* Dark base — no labels (CARTO raster basemaps require an API key as of Aug 2026) */
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png?key=cb1_2dkh_1_511eb3b32df0d653d22914f7',
       { subdomains: 'abcd', maxZoom: 19 }).addTo(m);
     /* Label overlay — native resolution, no scaling tricks = sharp crisp text */
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png',
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png?key=cb1_2dkh_1_511eb3b32df0d653d22914f7',
       { subdomains: 'abcd', maxZoom: 19 }).addTo(m);
 
     var sites = [
